@@ -45,7 +45,7 @@ router.post('/', (req, res, next) => {
                 .first()
                 .then((returnUserObject) => {
                     req.session.userInfo = returnUserObject;
-                    res.redirect('profile')
+                    res.redirect('/')
                 })
         })
 })
