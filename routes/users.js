@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const knex = require('../db/knex');
-const db = require('../db/api')
+
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {

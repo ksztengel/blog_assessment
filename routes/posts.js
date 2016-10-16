@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const knex = require('../db/knex');
-const db = require('../db/api')
+
 
 /* GET home page. */
 
@@ -14,8 +14,9 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
 
     const newPost = {
-        title: req.body.first_name,
+        title: req.body.title,
         post: req.body.post
+
     }
 
     knex('posts')
@@ -25,7 +26,7 @@ router.post('/', (req, res, next) => {
             knex('posts')
                 .where('id', id)
                 .first()
-                .then((returnpostObject) => {
+                .then((returnPostObject) => {
                     req.session.userInfo = returnPostObject;
                     res.redirect('/')
                 })
