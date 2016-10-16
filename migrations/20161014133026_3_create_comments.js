@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
     table.integer('posts_id')
         .notNullable()
         .references('id')
-        .inTable('users')
+        .inTable('posts')
         .onDelete('CASCADE')
         .index();
     table.string('comment').notNullable().defaultTo('');

@@ -1,0 +1,36 @@
+<nav class="blue">
+    <div class="nav-wrapper">
+        <a href="/" class="brand-logo">Blog</a>
+        <a href="#" class="button-collapse" data-activates="mobile-demo"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="/">Home</a></li>
+            <li><a href="/logout">Log Out</a></li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+            <li><a href="/">Home</a></li>
+            <li><a href="/login">Log In</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+<h1>{{title}}</h1>
+<p>{{post}}</p>
+
+
+<div class="row">
+  <form action="/comments" method="post" class="col s12">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="title" class="materialize-textarea"
+          type="text" class="validate" name="comment"
+          >
+          <label for="title">Comments</label>
+        </div>
+      </div>
+      <div class="container center-align">
+          <button class="btn waves-effect waves-light commentButton" type="submit" name="action" value="submit">Submit
+          </button>
+      </div>
+    </form>

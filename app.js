@@ -11,6 +11,11 @@ const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const app = express();
 
+app.use(cookieSession({
+    name: 'blogpositive',
+    secret: process.env.SESSION_SECRET,
+    secureProxy: app.get('env') === 'production'
+}));
 
 switch (app.get('env')) {
   case 'development':
@@ -48,17 +53,15 @@ const routes = require('./routes/index');
 const users = require('./routes/users');
 const posts = require('./routes/posts');
 const comments = require('./routes/comments');
-const signup = require('./routes/signup');
 const login = require('./routes/login');
-
+const logout = require('./routes/logout');
 
 app.use('/', routes);
 app.use('/users', users);
 app.use('/posts', posts);
 app.use('/comments', comments);
-app.use('/signup', signup);
 app.use('/login', login);
-
+app.use('/logout', logout);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   const err = new Error('Not Found');

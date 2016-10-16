@@ -4,6 +4,16 @@ const knex = require('../db/knex');
 
 
 /* GET home page. */
+// function addSubmitListener() {
+//     $('#postButton').on('click', function() {
+//       if ($('input[name=title]').val().length ===0) {
+//         Materialize.toast('Please enter a title.', 4000);
+//       }
+//       if ($('input[name=post]').val() === 0) {
+//         Materialize.toast('Please enter a post.', 4000);
+//       }
+//     })
+//   }
 
 router.get('/', (req, res, next) => {
     res.render('posts', {
@@ -14,6 +24,7 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
 
     const newPost = {
+        users_id: req.session.userInfo.id,
         title: req.body.title,
         post: req.body.post
 

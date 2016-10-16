@@ -10,7 +10,7 @@ const knex = require('../db/knex');
 router.get('/', (req, res, next) => {
     console.log('req.session is ', req.session.userInfo);
     knex('posts')
-        .where('id', req.session.userInfo.id)
+        .orderBy('updated_at')
         .then(index => {
             res.render('index', {
                 index: index,

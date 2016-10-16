@@ -1,13 +1,25 @@
 
-// exports.seed = function(knex, Promise) {
-//   // Deletes ALL existing entries
-//   return knex('table_name').del()
-//     .then(function () {
-//       return Promise.all([
-//         // Inserts seed entries
-//         knex('table_name').insert({id: 1, colName: 'rowValue1'}),
-//         knex('table_name').insert({id: 2, colName: 'rowValue2'}),
-//         knex('table_name').insert({id: 3, colName: 'rowValue3'})
-//       ]);
-//     });
-// };
+exports.seed = function(knex, Promise) {
+  // Deletes ALL existing entries
+  return knex('comments').del()
+    .then(function () {
+      return Promise.all([
+        // Inserts seed entries
+        knex('comments')
+        .insert({
+          posts_id: 1,
+          comment: 'Seriously?',
+        }),
+        knex('comments')
+        .insert({
+          posts_id:  3,
+          comment: 'I should have invented Instagram',
+        }),
+        knex('comments')
+        .insert({
+          posts_id: 2,
+          comment: 'That is not a good post',
+        })
+      ]);
+    });
+};
