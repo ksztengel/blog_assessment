@@ -4,17 +4,17 @@ const knex = require('./knex')
 
 module.exports = {
     getAllUsers: function(){
-      return knex('users')
+      return knex('posts')
     },
 
     getOneUser: function(id){
-      return knex('users')
-      .where('users.id', id)
+      return knex('posts')
+      .where('posts.id', id)
       .first()
     },
 
     createOneUser: function(user){
-      return knex('users')
-      .insert(user)
+      return knex('posts')
+      .insert(post)
     }
 }

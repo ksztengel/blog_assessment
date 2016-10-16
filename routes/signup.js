@@ -19,7 +19,7 @@ const bcrypt = require('bcrypt');
 /* GET users listing. */
 router.get('/', (req, res, next) => {
     res.render('signup', {
-        // profilePic: 'https://unsplash.it/200/?random'
+        
     });
 });
 
@@ -45,7 +45,7 @@ router.post('/', (req, res, next) => {
                 .first()
                 .then((returnUserObject) => {
                     req.session.userInfo = returnUserObject;
-                    res.redirect('/')
+                    res.redirect('posts')
                 })
         })
 })

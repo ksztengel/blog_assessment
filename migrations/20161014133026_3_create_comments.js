@@ -1,6 +1,12 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('comments', (table) => {
     table.increments();
+    table.integer('posts_id')
+        .notNullable()
+        .references('id')
+        .inTable('users')
+        .onDelete('CASCADE')
+        .index();
     table.string('comment').notNullable().defaultTo('');
     table.timestamps(true, true);
 })
