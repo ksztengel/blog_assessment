@@ -1,3 +1,5 @@
+<!-- <script src="/javascripts/posts.js"></script> -->
+
 <nav class="blue">
     <div class="nav-wrapper">
         <a href="/" class="brand-logo">Blog</a>
@@ -13,24 +15,21 @@
     </div>
 </nav>
 <div class="row">
-    <form action="/posts" method="post" class="col s12 center">
-        <div class="input-field col s6">
+    <form action="/posts" method="post" id="postForm" class="col s12">
+        <div class="input-field col s12">
             <input id="title" class="materialize-textarea" type="text" class="validate" name="title">
             <label for="title">Title</label>
         </div>
 </div>
 
 <div class="row">
-    <form class="col s12">
-        <div class="row">
-            <div class="input-field col s12">
-                <input id="title" class="materialize-textarea" type="text" class="validate" name="post">
-                <label for="post">Post</label>
-            </div>
-        </div>
-        <div class="container center-align">
-            <button class="btn waves-effect waves-light postButton" type="submit" name="action" value="submit">Submit
-            </button>
-        </div>
-    </form>
+    <div class="input-field col s12">
+        <input id="post" class="materialize-textarea" type="text" class="validate" name="post">
+        <label for="post">Post</label>
+    </div>
 </div>
+<div class="container center-align">
+    <button class="btn waves-effect waves-light postButton" type="submit">Submit
+    </button>
+</div>
+</form>

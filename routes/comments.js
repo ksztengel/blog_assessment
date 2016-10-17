@@ -2,29 +2,37 @@ const express = require('express');
 const router = express.Router();
 const knex = require('../db/knex');
 
+const authorize = (req, res, next) => {
+    if (!req.session.userInfo) {
+        res.render('error', {
+            message: "You need to be signed in to access the posts page.",
+
+        });
+    }
+    next();
+}
 /* GET home page. */
-// router.get('/', function(req, res, next) {
-//   res.render('index', { title: 'Express' });
-// });
+
 
 router.get('/', (req, res, next) => {
-    console.log('req.session is ', req.session.userInfo.id);
-    knex('posts')
-        .where('id', req.session.userInfo.id)
-        .then(comments => {
-            res.render('comments', {
-                comments: comments,
-                title: comments.title,
-                post: comments.post
-            })
-            console.log('comments', comments);
-        })
+  console.log('req.session is ', req.session.userInfo.id);
+  knex('posts')
+  .join('comments', 'comments.id', 'comments.posts_id')
+  .where('posts.id', req.session.userInfo.posts_id)
+  .then(comments => {
+    res.render('comments', {
+      comments: comments,
+      title: comments.title,
+      post: comments.post,
+      comment: comments.comments
+    })
+    console.log('comments under post', comments);
+  })
 })
-
 router.post('/', (req, res, next) => {
 
     const newComment = {
-        posts_id: req.session.userInfo.id,
+        posts_id: req.session.userInfo.posts_id,
         comment: req.body.comment
     }
     knex('comments')
@@ -36,9 +44,9 @@ router.post('/', (req, res, next) => {
                 .first()
                 .then((returnCommentObject) => {
                     req.session.userInfo = returnCommentObject;
-                    res.redirect('/')
+                    res.redirect('/comments')
                 })
         })
-        console.log(newComment);
+
     })
 module.exports = router;

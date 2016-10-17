@@ -35,13 +35,7 @@ app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(bodyParser.json());
-
-app.use(cookieSession({
-  name: 'bookshelf',
-  secret: process.env.SESSION_SECRET,
-  secureProxy: app.get('env') === 'production'
-}));
+app.use(bodyParser.json())
 
 
 app.use(morgan('dev'));

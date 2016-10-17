@@ -1,37 +1,40 @@
+
+'use strict'
+
 const express = require('express');
 const router = express.Router();
 const knex = require('../db/knex');
 
+const authorize = (req, res, next) => {
+    if (!req.session.userInfo) {
+        res.render('error', {
+            message: "You need to be signed in to access the posts page.",
 
-/* GET home page. */
-// function addSubmitListener() {
-//     $('#postButton').on('click', function() {
-//       if ($('input[name=title]').val().length ===0) {
-//         Materialize.toast('Please enter a title.', 4000);
-//       }
-//       if ($('input[name=post]').val() === 0) {
-//         Materialize.toast('Please enter a post.', 4000);
-//       }
-//     })
-//   }
+        });
+    }
+    next();
+}
 
-router.get('/', (req, res, next) => {
+
+router.get('/',authorize, (req, res, next) => {
     res.render('posts', {
 
     });
 });
 
 router.post('/', (req, res, next) => {
-
+  console.log('hit the post route',req.body);
     const newPost = {
-        users_id: req.session.userInfo.id,
         title: req.body.title,
-        post: req.body.post
+        post: req.body.post,
+        users_id: req.session.userInfo.id
 
     }
 
+    console.log(newPost);
     knex('posts')
         .insert(newPost, 'id')
+
         .then((posts) => {
             const id = posts[0]
             knex('posts')
@@ -44,42 +47,7 @@ router.post('/', (req, res, next) => {
         })
 })
 
-module.exports = router;
 
-//
-// router.get('/:id', (req, res, next) => {
-//     knex('posts')
-//         .where('posts.id', req.params.id)
-//         .first()
-//         .then((post) => {
-//             if (!post) {
-//                 return next();
-//             }
-//             res.send(post);
-//         })
-//         .catch((err) => {
-//             next(err);
-//         });
-// });
-
-// router.post('/', (req, res, next) => {
-//     let insertPost = {
-//         title: req.body.title,
-//         post: req.body.post,
-//
-//     }
-//     knex(`posts`).insert(insertPost, `id`).then((num) => {
-//             const id = num[0];
-//             knex('books')
-//                 .where(`id`, id).first().then((insertPost) => {
-//                     res.send(insertPost)
-//                 })
-//         })
-//         .catch((err) => {
-//             next(err);
-//         });
-// });
-//
 // router.patch('/:id',(req, res, next) => {
 //     let updatePost = {
 //         title: req.body.title,
@@ -127,3 +95,38 @@ module.exports = router;
 // });
 
 module.exports = router;
+
+//
+// router.get('/:id', (req, res, next) => {
+//     knex('posts')
+//         .where('posts.id', req.params.id)
+//         .first()
+//         .then((post) => {
+//             if (!post) {
+//                 return next();
+//             }
+//             res.send(post);
+//         })
+//         .catch((err) => {
+//             next(err);
+//         });
+// });
+
+// router.post('/', (req, res, next) => {
+//     let insertPost = {
+//         title: req.body.title,
+//         post: req.body.post,
+//
+//     }
+//     knex(`posts`).insert(insertPost, `id`).then((num) => {
+//             const id = num[0];
+//             knex('books')
+//                 .where(`id`, id).first().then((insertPost) => {
+//                     res.send(insertPost)
+//                 })
+//         })
+//         .catch((err) => {
+//             next(err);
+//         });
+// });
+//

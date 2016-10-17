@@ -4,18 +4,24 @@
         <a href="#" class="button-collapse" data-activates="mobile-demo"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
             <li><a href="/">Home</a></li>
+            <li><a href="/posts">Post</a></li>
             <li><a href="/logout">Log Out</a></li>
         </ul>
         <ul class="side-nav" id="mobile-demo">
             <li><a href="/">Home</a></li>
-            <li><a href="/login">Log In</a></li>
+            <li><a href="/posts">Post</a></li>
+            <li><a href="/logout">Log Out</a></li>
         </ul>
     </div>
 </nav>
 
+<div class = "container">
 
+  {{#each comments}}
 <h1>{{title}}</h1>
 <p>{{post}}</p>
+<p>{{comment}}</p>
+{{/each}}
 
 
 <div class="row">
@@ -34,3 +40,5 @@
           </button>
       </div>
     </form>
+</div>
+</div>
