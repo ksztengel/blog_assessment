@@ -9,12 +9,10 @@ const authorize = (req, res, next) => {
     if (!req.session.userInfo) {
         res.render('error', {
             message: "You need to be signed in to access the posts page.",
-
         });
     }
     next();
 }
-
 
 router.get('/',authorize, (req, res, next) => {
     res.render('posts', {
@@ -28,21 +26,19 @@ router.post('/', (req, res, next) => {
         title: req.body.title,
         post: req.body.post,
         users_id: req.session.userInfo.id
-
     }
-
     console.log(newPost);
     knex('posts')
         .insert(newPost, 'id')
-
         .then((posts) => {
             const id = posts[0]
             knex('posts')
                 .where('id', id)
                 .first()
                 .then((returnPostObject) => {
-                    req.session.userInfo = returnPostObject;
-                    res.redirect('/')
+                   returnPostObject = req.session.postObject
+                    res.redirect('/blog')
+                    console.log(returnPostObject);
                 })
         })
 })

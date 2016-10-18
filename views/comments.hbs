@@ -1,6 +1,6 @@
 <nav class="blue">
     <div class="nav-wrapper">
-        <a href="/" class="brand-logo">Blog</a>
+        <a href="/blog" class="brand-logo">Blog</a>
         <a href="#" class="button-collapse" data-activates="mobile-demo"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
             <li><a href="/">Home</a></li>
@@ -15,30 +15,27 @@
     </div>
 </nav>
 
-<div class = "container">
+<div class="container">
 
-  {{#each comments}}
-<h1>{{title}}</h1>
-<p>{{post}}</p>
-<p>{{comment}}</p>
-{{/each}}
+    {{#each comments}}
+        <h1>{{title}}</h1>
+        <p>{{post}}</p>
+        <p>{{comment}}</p>
+    {{/each}}
 
-
-<div class="row">
-  <form action="/comments" method="post" class="col s12">
-    <form class="col s12">
-      <div class="row">
-        <div class="input-field col s12">
-          <input id="title" class="materialize-textarea"
-          type="text" class="validate" name="comment"
-          >
-          <label for="title">Comments</label>
-        </div>
-      </div>
-      <div class="container center-align">
-          <button class="btn waves-effect waves-light commentButton" type="submit" name="action" value="submit">Submit
-          </button>
-      </div>
-    </form>
-</div>
+    <div class="row">
+        <form action="/comments" method="post" class="col s12">
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="title" class="materialize-textarea" type="text" class="validate" name="comment">
+                        <label for="title">Comments</label>
+                    </div>
+                </div>
+                <div class="container center-align">
+                    <button class="btn waves-effect waves-light commentButton" type="submit" name="action" value="submit">Submit
+                    </button>
+                </div>
+            </form>
+    </div>
 </div>

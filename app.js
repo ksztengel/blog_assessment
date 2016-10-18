@@ -44,6 +44,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 const routes = require('./routes/index');
+const blog = require('./routes/blog');
 const users = require('./routes/users');
 const posts = require('./routes/posts');
 const comments = require('./routes/comments');
@@ -51,6 +52,7 @@ const login = require('./routes/login');
 const logout = require('./routes/logout');
 
 app.use('/', routes);
+app.use('/blog', blog);
 app.use('/users', users);
 app.use('/posts', posts);
 app.use('/comments', comments);
