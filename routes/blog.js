@@ -14,7 +14,9 @@ router.get('/', (req, res, next) => {
                 index: index,
                 title: index.title,
                 post: index.post,
-                comment: index.comment
+                comment: index.comment,
+                postsId: index.id
+
             })
 
         })

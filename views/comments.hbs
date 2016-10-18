@@ -17,14 +17,16 @@
 
 <div class="container">
 
-    {{#each comments}}
         <h1>{{title}}</h1>
         <p>{{post}}</p>
+        <!-- <p>{{comments}}</p> -->
+    {{#each comments}}
         <p>{{comment}}</p>
-    {{/each}}
+        <a href="/comments/delete/:{{this.id}}"></a>
+        {{/each}}
 
     <div class="row">
-        <form action="/comments" method="post" class="col s12">
+        <form action="/comments/{{postId}}" method="post" class="col s12">
             <form class="col s12">
                 <div class="row">
                     <div class="input-field col s12">

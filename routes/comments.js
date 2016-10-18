@@ -12,41 +12,59 @@ const authorize = (req, res, next) => {
     }
     /* GET home page. */
 
-router.get('/', (req, res, next) => {
-  let postsId = Number.parseInt(req.session.postObject.id)
-  console.log('postsId', postsId);
+router.get('/:id', (req, res, next) => {
+    console.log('req.session', req.session);
+    var post;
+    var comments = [];
+    var postId = req.params.id
     knex('posts')
-        .join('comments', 'posts.id', 'comments.posts_id')
-        .where('posts.id', postsId)
-        .then(comments => {
-            res.render('comments', {
-                comments: comments,
-                title: comments.title,
-                post: comments.post,
-                comment: comments.comments
-            })
-            console.log('comments under post', comments);
-        })
-})
-router.post('/', (req, res, next) => {
-
-    const newComment = {
-        posts_id: req.session.postObject.id,
-        comment: req.body.comment
-    }
-
-    knex('comments')
-        .insert(newComment, 'id')
-        .then((comments) => {
-            const id = comments[0]
+        .where('id', req.params.id)
+        .then(returnPost => {
+            post = returnPost
             knex('comments')
-                .where('id', id)
-                .first()
-                .then((returnCommentObject) => {
-                    req.session.commentObject = returnCommentObject;
-                    res.redirect('/comments')
+                .where('posts_id', req.params.id)
+                .then(returnComments => {
+                    returnComments.forEach((comment) => {
+                        if (comment.posts_id == req.params.id) {
+                            comments.push(comment)
+                        }
+                    })
+                    console.log("postId", postId);
+                    res.render('comments', {
+                        title: post[0].title,
+                        post: post[0].post,
+                        postId: postId,
+                        comments: comments
+                    })
                 })
+
+            .catch((err) => {
+                next(err)
+            })
         })
 
+    router.post('/:id', (req, res, next) => {
+        console.log("is this working", req.params.id);
+        const newComment = {
+            posts_id: req.params.id,
+            comment: req.body.comment
+        }
+
+        knex('comments')
+            .insert(newComment, 'id')
+            .then((comments) => {
+                        res.redirect('/comments/'+ req.params.id)
+
+            })
+
+        .catch((err) => {
+            next(err)
+        })
+    })
+})
+
+router.get('/delete/:id', (req, res, next)=>{
+
+  
 })
 module.exports = router;

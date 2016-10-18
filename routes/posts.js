@@ -38,7 +38,7 @@ router.post('/', (req, res, next) => {
                 .then((returnPostObject) => {
                    returnPostObject = req.session.postObject
                     res.redirect('/blog')
-                    console.log(returnPostObject);
+                    console.log('returnPostObject', returnPostObject);
                 })
         })
 })
