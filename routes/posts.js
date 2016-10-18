@@ -1,4 +1,3 @@
-
 'use strict'
 
 const express = require('express');
@@ -14,14 +13,14 @@ const authorize = (req, res, next) => {
     next();
 }
 
-router.get('/',authorize, (req, res, next) => {
+router.get('/', authorize, (req, res, next) => {
     res.render('posts', {
 
     });
 });
 
 router.post('/', (req, res, next) => {
-  console.log('hit the post route',req.body);
+    console.log('hit the post route', req.body);
     const newPost = {
         title: req.body.title,
         post: req.body.post,
@@ -36,7 +35,7 @@ router.post('/', (req, res, next) => {
                 .where('id', id)
                 .first()
                 .then((returnPostObject) => {
-                   returnPostObject = req.session.postObject
+                    returnPostObject = req.session.postObject
                     res.redirect('/blog')
                     console.log('returnPostObject', returnPostObject);
                 })

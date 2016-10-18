@@ -12,10 +12,11 @@
 </nav>
 
 {{#each index}}
-<h5>{{title}}</h5>
-<p>{{post}}</p>
-<p>{{comment}}</p>
-<a href = "/comments/{{this.id}}"> <button class="btn waves-effect waves-light" type="submit" name="action">comment</a>
+    <h5>{{title}}</h5>
+    <p>{{post}}</p>
+    <p>{{comment}}</p>
+    <a href="/comments/{{this.id}}">
+        <button class="btn waves-effect waves-light" type="submit" name="action">comment</a>
     <i class="material-icons right">send</i>
-  </button>
+    </button>
 {{/each}}
