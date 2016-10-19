@@ -1,6 +1,6 @@
-<nav class="blue">
+<nav class="grey">
     <div class="nav-wrapper">
-        <a href="/blog" class="brand-logo">Blog</a>
+        <a href="/blog" class="brand-logo"><img src="http://www.davidpickles.com/photos/8b1a8475484bb8e60b570fe7c1a2.jpg"</a>
         <a href="#" class="button-collapse" data-activates="mobile-demo"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
             <li><a href="/posts">Post</a></li>
@@ -11,12 +11,34 @@
     </div>
 </nav>
 
-{{#each index}}
-    <h5>{{title}}</h5>
-    <p>{{post}}</p>
-    <p>{{comment}}</p>
-    <a href="/comments/{{this.id}}">
-        <button class="btn waves-effect waves-light" type="submit" name="action">comment</a>
-    <i class="material-icons right">send</i>
-    </button>
-{{/each}}
+<div class="row"></div>
+<div class="row"></div>
+<div class="row"></div>
+<div class="row"></div>
+<div class="row"></div>
+<div class="row"></div>
+<div class="row"></div>
+<div class="row"></div>
+<div class="row"></div>
+<div class="row"></div>
+<div class="row"></div>
+<div class="row"></div>
+<div class="container">
+<div class="row">
+  {{#each index}}
+        <div class="col s12">
+          <div class="card">
+            <div class="card-image">
+            <div class="card-content">
+              <h5>{{title}}</h5>
+              <p>{{post}}</p>
+              <p>{{comment}}</p>
+              <a href="/comments/{{this.id}}">
+                  <button class="btn waves-effect waves-light #bdbdbd grey lighten-1" type="submit" name="action">comment</a>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+      </div>

@@ -1,6 +1,6 @@
-<nav class="blue">
+<nav class="grey">
     <div class="nav-wrapper">
-        <a href="/blog" class="brand-logo">Blog</a>
+        <a href="/blog" class="brand-logo"><img src="http://www.davidpickles.com/photos/8b1a8475484bb8e60b570fe7c1a2.jpg"</a>
         <a href="#" class="button-collapse" data-activates="mobile-demo"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
             <li><a href="/">Home</a></li>
@@ -14,9 +14,21 @@
         </ul>
     </div>
 </nav>
+<div class="row"></div>
+<div class="row"></div>
+<div class="row"></div>
+<div class="row"></div>
+<div class="row"></div>
+<div class="row"></div>
+<div class="row"></div>
+<div class="row"></div>
+<div class="row"></div>
+<div class="row"></div>
+<div class="row"></div>
+<div class="row"></div>
 
 <div class="row">
-        <div class="col s12 m6">
+        <div class="col s12">
           <div class="card">
             <div class="card-content">
               <span class="card-title">{{title}}</span>
@@ -24,7 +36,7 @@
                   <h6>{{post}}</h6>
                   {{#each comments}}
                       <p>{{comment}}</p>
-                      <a href="/comments/delete/:{{this.id}}"></a>
+                      <a href="/comments/delete/{{this.id}}"></a>
                   {{/each}}
             </div>
             <div class="card-action">
@@ -45,7 +57,7 @@
                 <span class="card-title">Enter a Comment</span>
                 <div class="row">
                     <form action="/comments/{{postId}}" method="post" class="col s12">
-                        <form class="col s12">
+                        <form class="col s12 ">
                             <div class="row">
                                 <div class="input-field col s12">
                                     <input id="title" class="materialize-textarea" type="text" class="validate" name="comment">
@@ -53,14 +65,14 @@
                                 </div>
                             </div>
                             <div class="container left-align">
-                                <button class="btn waves-effect waves-light commentButton" type="submit" name="action" value="submit"><i class="material-icons left">send</i>Submit</a>
+                                <button class="btn waves-effect waves-light #bdbdbd grey lighten-1 commentButton" type="submit" name="action" value="submit"><i class="material-icons left">send</i>Submit</a>
                                 </button>
                             </div>
                         </form>
           </div>
               </div>
               <div class="card-action">
-                <a href="/comments/edit/:{{this.id}}">EDIT</a>
+                <a href="/comments/patch/:{{this.id}}">EDIT</a>
                 <a href="/comments/delete/:{{this.id}}">DELETE</a>
               </div>
             </div>
