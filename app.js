@@ -51,6 +51,7 @@ const comments = require('./routes/comments');
 const login = require('./routes/login');
 const logout = require('./routes/logout');
 
+
 app.use('/', routes);
 app.use('/blog', blog);
 app.use('/users', users);

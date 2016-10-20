@@ -14,28 +14,32 @@ const authorize = (req, res, next) => {
 
 router.get('/:id', authorize, (req, res, next) => {
     console.log('req.session', req.session);
-    var post;
-    var comments = [];
-    var postId = req.params.id
+
+    // post.comments = [];
+    // var postId = req.params.id;
+
+    // var commentId = comments.id;
+
     knex('posts')
         .where('id', req.params.id)
+        .first()
         .then(returnPost => {
-            post = returnPost
+            console.log('returnpost', returnPost);
+            var post = returnPost
+            post.comments = []
             knex('comments')
-                .where('posts_id', req.params.id)
+                .where('posts_id', post.id)
                 .then(returnComments => {
+                    console.log('returnComments', returnComments);
                     returnComments.forEach((comment) => {
-                        if (comment.posts_id == req.params.id) {
-                            comments.push(comment)
-                        }
+                        post.comments.push(comment)
                     })
-                    console.log("postId", postId);
+                    console.log("post to be rendered", post);
+
                     res.render('comments', {
-                        title: post[0].title,
-                        post: post[0].post,
-                        postId: postId,
-                        comments: comments
-                    })
+                        post: post
+                    });
+
                 })
 
             .catch((err) => {
@@ -48,6 +52,7 @@ router.get('/:id', authorize, (req, res, next) => {
             posts_id: req.params.id,
             comment: req.body.comment
         }
+        console.log("newCommnent", newComment);
 
         knex('comments')
             .insert(newComment, 'id')
@@ -64,33 +69,35 @@ router.get('/:id', authorize, (req, res, next) => {
 
 //edit/delete post:
 
-router.post('/edit/:id', (req, res, next) => {
-  console.log('req.body', req.body);
-let updatePost = {
-    title: req.body.title,
-    post: req.body.post
-}
-knex(`posts`)
-    .where(`id`, req.params.id)
-    .update(updatePost, '*')
-    .then(() => {
+router.post('/editpost/:id', (req, res, next) => {
+    console.log('req.body', req.body);
+    let updatePost = {
+        title: req.body.title,
+        post: req.body.post
+    }
+    knex(`posts`)
+        .where(`id`, req.params.id)
+        .update(updatePost, '*')
+        .then(() => {
+            res.redirect('/comments/' + req.params.id)
 
-        res.redirect('/blog')
-        // res.json({repsonse: 'post updated'})
-    })
-    .catch((err) => {
-        next(err);
-    });
+        })
+        .catch((err) => {
+            next(err);
+        });
 });
 
 
-router.get('/delete/:id', (req, res, next) => {
+router.get('/deletepost/:id', (req, res, next) => {
     knex('posts')
         .where('id', req.params.id)
         .delete()
         .then(() => {
-            console.log({response: 'post deleted'});
+            console.log({
+                response: 'post deleted'
+            });
             res.redirect('/blog')
+
         })
         .catch((err) => {
             next(err);
@@ -99,6 +106,9 @@ router.get('/delete/:id', (req, res, next) => {
 })
 
 //edit/delete comments:
+router.get('/edit/:id', (req, res) => {
+
+})
 router.post('/edit/:id', (req, res, next) => {
     let updateComment = {
         comment: req.body.comment
@@ -110,8 +120,8 @@ router.post('/edit/:id', (req, res, next) => {
                 .where(`id`, comment[0].id)
                 .first()
                 .then((newComment) => {
-                  res.redirect('/comments/' + req.params.id)
-                    // res.json({response: 'comment updated'})
+                    res.redirect('/comments/' + req.params.id)
+                        // res.json({response: 'comment updated'})
                 })
         })
         .catch((err) => {
@@ -120,22 +130,22 @@ router.post('/edit/:id', (req, res, next) => {
 });
 
 
-router.post('/delete/:id', (req, res, next) => {
-        knex('comments')
-            .where('id', req.params.id)
-            knex('comments')
-            .delete()
-            .where('id', req.params.id)
-            .then(() => {
-              res.redirect('/comments/' + req.params.id)
+router.get('/delete/:id', (req, res, next) => {
+
+    knex('comments')
+        .where('id', req.params.id)
+        .first()
+        .delete()
+        .then(() => {
+            res.redirect('/blog')
                 // res.json({response: 'comment deleted'})
-            })
-            .catch((err) => {
-                next(err)
-            })
+        })
+        .catch((err) => {
+            next(err)
+        })
 
-    })
+})
 
 
 
-    module.exports = router;
+module.exports = router;
