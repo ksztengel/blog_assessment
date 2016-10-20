@@ -3,7 +3,7 @@
 $(document).ready(() => {
     console.log('im listening');
 
-     $('.modal-trigger').leanModal();
+    $('.modal-trigger').leanModal();
 
     $('#postForm').submit((event) => {
         event.preventDefault();

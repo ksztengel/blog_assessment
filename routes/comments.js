@@ -64,7 +64,8 @@ router.get('/:id', authorize, (req, res, next) => {
 
 //edit/delete post:
 
-router.post('/edit:id', (req, res, next) => {
+router.post('/edit/:id', (req, res, next) => {
+  console.log('req.body', req.body);
 let updatePost = {
     title: req.body.title,
     post: req.body.post
@@ -73,7 +74,9 @@ knex(`posts`)
     .where(`id`, req.params.id)
     .update(updatePost, '*')
     .then(() => {
-        res.json({repsonse: 'post updated'})
+
+        res.redirect('/blog')
+        // res.json({repsonse: 'post updated'})
     })
     .catch((err) => {
         next(err);
@@ -81,12 +84,13 @@ knex(`posts`)
 });
 
 
-router.post('/delete:id', (req, res, next) => {
+router.get('/delete/:id', (req, res, next) => {
     knex('posts')
         .where('id', req.params.id)
         .delete()
         .then(() => {
-            res.json({response: 'post deleted'});
+            console.log({response: 'post deleted'});
+            res.redirect('/blog')
         })
         .catch((err) => {
             next(err);
@@ -95,7 +99,7 @@ router.post('/delete:id', (req, res, next) => {
 })
 
 //edit/delete comments:
-router.post('/edit:id', (req, res, next) => {
+router.post('/edit/:id', (req, res, next) => {
     let updateComment = {
         comment: req.body.comment
     }
@@ -106,7 +110,8 @@ router.post('/edit:id', (req, res, next) => {
                 .where(`id`, comment[0].id)
                 .first()
                 .then((newComment) => {
-                    res.redirect({response: 'comment updated'})
+                  res.redirect('/comments/' + req.params.id)
+                    // res.json({response: 'comment updated'})
                 })
         })
         .catch((err) => {
@@ -115,14 +120,15 @@ router.post('/edit:id', (req, res, next) => {
 });
 
 
-router.post('/delete:id', (req, res, next) => {
+router.post('/delete/:id', (req, res, next) => {
         knex('comments')
             .where('id', req.params.id)
             knex('comments')
             .delete()
             .where('id', req.params.id)
             .then(() => {
-                res.json({response: 'comment deleted'})
+              res.redirect('/comments/' + req.params.id)
+                // res.json({response: 'comment deleted'})
             })
             .catch((err) => {
                 next(err)
