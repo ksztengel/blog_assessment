@@ -5,7 +5,7 @@ const knex = require('../db/knex')
 
 router.get('/', ((req, res, next) => {
     req.session = null;
-    res.redirect('login');
+    res.redirect('/');
 }))
 
 

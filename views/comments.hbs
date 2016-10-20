@@ -1,17 +1,19 @@
+<link rel="stylesheet" href="/stylesheets/style.css">
+<script src="/javascripts/posts.js"></script>
 <nav class="grey">
     <div class="nav-wrapper">
-        <a href="/blog" class="brand-logo"><img src="http://www.davidpickles.com/photos/8b1a8475484bb8e60b570fe7c1a2.jpg"</a>
-        <a href="#" class="button-collapse" data-activates="mobile-demo"><i class="material-icons">menu</i></a>
-        <ul class="right hide-on-med-and-down">
-            <li><a href="/">Home</a></li>
-            <li><a href="/posts">Post</a></li>
-            <li><a href="/logout">Log Out</a></li>
-        </ul>
-        <ul class="side-nav" id="mobile-demo">
-            <li><a href="/">Home</a></li>
-            <li><a href="/posts">Post</a></li>
-            <li><a href="/logout">Log Out</a></li>
-        </ul>
+        <a href="/blog" class="brand-logo"><img src="http://www.davidpickles.com/photos/8b1a8475484bb8e60b570fe7c1a2.jpg" </a>
+            <a href="#" class="button-collapse" data-activates="mobile-demo"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="/">Home</a></li>
+                <li><a href="/posts">Post</a></li>
+                <li><a href="/logout">Log Out</a></li>
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+                <li><a href="/">Home</a></li>
+                <li><a href="/posts">Post</a></li>
+                <li><a href="/logout">Log Out</a></li>
+            </ul>
     </div>
 </nav>
 <div class="row"></div>
@@ -26,35 +28,34 @@
 <div class="row"></div>
 <div class="row"></div>
 <div class="row"></div>
-
 <div class="row">
-        <div class="col s12">
-          <div class="card">
+    <div class="col s12">
+        <div class="card">
             <div class="card-content">
-              <span class="card-title">{{title}}</span>
-              <div class="container">
-                  <h6>{{post}}</h6>
-                  {{#each comments}}
-                      <p>{{comment}}</p>
-                      <a href="/comments/delete/{{this.id}}"></a>
-                  {{/each}}
+                <span class="card-title">{{title}}</span>
+                <div class="container">
+                    <h6>{{post}}</h6>
+                </div>
+                <div class="card-action">
+                    <!-- <a href="/comments/edit/:{{postId}}">EDIT</a> -->
+                   <a class="modal-trigger" href="#modal1">EDIT</a>
+
+                    <a href="/comments/delete/:{{postId}}">DELETE</a>
+                </div>
             </div>
-            <div class="card-action">
-              <a href="#">EDIT</a>
-              <a href="#">DELETE</a>
-            </div>
-          </div>
         </div>
-      </div>
-
     </div>
-  </div>
-
-  <div class="row">
-          <div class="col s12 m6">
-            <div class="card">
-              <div class="card-content">
-                <span class="card-title">Enter a Comment</span>
+</div>
+</div>
+<div class="row">
+    <div class="col s12 m6">
+        <div class="card">
+            <div class="card-content">
+                <div class="container">
+                    {{#each comments}}
+                        <p>{{comment}}</p>
+                    {{/each}}
+                </div>
                 <div class="row">
                     <form action="/comments/{{postId}}" method="post" class="col s12">
                         <form class="col s12 ">
@@ -69,12 +70,31 @@
                                 </button>
                             </div>
                         </form>
-          </div>
-              </div>
-              <div class="card-action">
-                <a href="/comments/patch/:{{this.id}}">EDIT</a>
-                <a href="/comments/delete/:{{this.id}}">DELETE</a>
-              </div>
+                </div>
             </div>
-          </div>
+            <div class="card-action">
+                <!-- <a href="/comments/edit/:{{this.id}}">EDIT</a> -->
+                 <a class="modal-trigger" href="#modal2">EDIT</a>
+                <a href="/comments/delete/:{{this.id}}">DELETE</a>
+            </div>
         </div>
+    </div>
+    <div id="modal1" class="modal modal-fixed-footer">
+      <div class="modal-content">
+        <h4>Edit a post</h4>
+        <p>A bunch of text</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">submit</a>
+      </div>
+    </div>
+    <div id="modal2" class="modal modal-fixed-footer">
+      <div class="modal-content">
+        <h4>Edit a comment</h4>
+        <p>A bunch of text</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">submit</a>
+      </div>
+    </div>
+</div>

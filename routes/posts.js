@@ -7,7 +7,7 @@ const knex = require('../db/knex');
 const authorize = (req, res, next) => {
     if (!req.session.userInfo) {
         res.render('error', {
-            message: "You need to be signed in to access the posts page.",
+            message: "You need to be signed in to access this page.",
         });
     }
     next();

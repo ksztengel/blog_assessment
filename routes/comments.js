@@ -5,7 +5,7 @@ const knex = require('../db/knex');
 const authorize = (req, res, next) => {
         if (!req.session.userInfo) {
             res.render('error', {
-                message: "You need to be signed in to access the posts page.",
+                message: "You need to be signed in to access this page.",
             });
         }
         next();
@@ -64,44 +64,29 @@ router.get('/:id', authorize, (req, res, next) => {
 
 //edit/delete post:
 
-router.put('/:id', (req, res, next) => {
-    let updatePost = {
-        title: req.body.title,
-        post: req.body.post
-    }
-    knex(`posts`)
-        .update(updatePost, '*')
-        .then((post) => {
-            knex('posts')
-                .where(`id`, post[0].id)
-                .first()
-                .then((newPost) => {
-                    res.redirect('/blog')
-                })
-        })
-        .catch((err) => {
-            next(err);
-        });
+router.post('/edit:id', (req, res, next) => {
+let updatePost = {
+    title: req.body.title,
+    post: req.body.post
+}
+knex(`posts`)
+    .where(`id`, req.params.id)
+    .update(updatePost, '*')
+    .then(() => {
+        res.json({repsonse: 'post updated'})
+    })
+    .catch((err) => {
+        next(err);
+    });
 });
 
-router.delete('/:id', (req, res, next) => {
-    let post;
+
+router.post('/delete:id', (req, res, next) => {
     knex('posts')
-        .where('id', id)
-        .first()
-        .then((row) => {
-            if (!row) {
-                return next();
-            }
-            book = row;
-            return knex('posts')
-                // .returning('*')
-                .del()
-                .where('id', id);
-        })
+        .where('id', req.params.id)
+        .delete()
         .then(() => {
-            delete post.id;
-            res.json(post);
+            res.json({response: 'post deleted'});
         })
         .catch((err) => {
             next(err);
@@ -110,7 +95,7 @@ router.delete('/:id', (req, res, next) => {
 })
 
 //edit/delete comments:
-router.put('/:id', (req, res, next) => {
+router.post('/edit:id', (req, res, next) => {
     let updateComment = {
         comment: req.body.comment
     }
@@ -121,7 +106,7 @@ router.put('/:id', (req, res, next) => {
                 .where(`id`, comment[0].id)
                 .first()
                 .then((newComment) => {
-                    res.redirect('/blog')
+                    res.redirect({response: 'comment updated'})
                 })
         })
         .catch((err) => {
@@ -130,32 +115,21 @@ router.put('/:id', (req, res, next) => {
 });
 
 
-router.delete('/:id', (req, res, next) => {
-    knex('comments')
-        .where('id', req.params.id)
-        .first()
-        .then((comment) => {
-            if (!comment) {
-                next(err)
-            }
-            // if (comment.user_id !== req.userInfo.id) {
-            //     res.redirect('/blog')
-            // }
+router.post('/delete:id', (req, res, next) => {
+        knex('comments')
+            .where('id', req.params.id)
             knex('comments')
-                .del()
-                .where('id', req.params.id)
+            .delete()
+            .where('id', req.params.id)
+            .then(() => {
+                res.json({response: 'comment deleted'})
+            })
+            .catch((err) => {
+                next(err)
+            })
 
-        })
-        .then(() => {
-            res.redirect('/blog')
-        })
-        .catch((err) => {
-            next(err)
-        })
-
-});
+    })
 
 
 
-
-module.exports = router;
+    module.exports = router;
