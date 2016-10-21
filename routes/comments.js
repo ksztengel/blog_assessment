@@ -3,23 +3,16 @@ const router = express.Router();
 const knex = require('../db/knex');
 
 const authorize = (req, res, next) => {
-        if (!req.session.userInfo) {
-            res.render('error', {
-                message: "You need to be signed in to access this page.",
-            });
-        }
-        next();
+    if (!req.session.userInfo) {
+        res.render('error', {
+            message: "You need to be signed in to access this page.",
+        });
     }
-    /* GET home page. */
+    next();
+}
 
 router.get('/:id', authorize, (req, res, next) => {
     console.log('req.session', req.session);
-
-    // post.comments = [];
-    // var postId = req.params.id;
-
-    // var commentId = comments.id;
-
     knex('posts')
         .where('id', req.params.id)
         .first()
@@ -34,6 +27,7 @@ router.get('/:id', authorize, (req, res, next) => {
                     returnComments.forEach((comment) => {
                         post.comments.push(comment)
                     })
+
                     console.log("post to be rendered", post);
 
                     res.render('comments', {
@@ -52,7 +46,8 @@ router.get('/:id', authorize, (req, res, next) => {
             posts_id: req.params.id,
             comment: req.body.comment
         }
-        console.log("newCommnent", newComment);
+
+        console.log("newComment", newComment);
 
         knex('comments')
             .insert(newComment, 'id')
@@ -106,28 +101,36 @@ router.get('/deletepost/:id', (req, res, next) => {
 })
 
 //edit/delete comments:
-router.get('/edit/:id', (req, res) => {
-
-})
-router.post('/edit/:id', (req, res, next) => {
-    let updateComment = {
-        comment: req.body.comment
-    }
-    knex(`comments`)
-        .update(updateComment, '*')
+router.get('/editcomments/:id', (req, res) => {
+    knex('comments')
+        .where('id', req.params.id)
         .then((comment) => {
-            knex('comments')
-                .where(`id`, comment[0].id)
-                .first()
-                .then((newComment) => {
-                    res.redirect('/comments/' + req.params.id)
-                        // res.json({response: 'comment updated'})
-                })
+
+            console.log("comment to be rendered", comment);
+
+            res.render('editcomments', {
+                comment: comment,
+                editComment: comment[0].comment,
+                commentId: comment[0].id
+
+            })
         })
-        .catch((err) => {
-            next(err);
-        });
-});
+})
+
+router.post('/editcomments/:id', (req, res, next) => {
+        let updateComment = {
+            comment: req.body.comment
+        }
+        knex(`comments`)
+            .where(`id`, req.params.id)
+            .update(updateComment, '*')
+            .then((comment) => {
+                console.log(comment);
+                res.redirect('/blog/')
+  
+            })
+    })
+
 
 
 router.get('/delete/:id', (req, res, next) => {
@@ -138,14 +141,12 @@ router.get('/delete/:id', (req, res, next) => {
         .delete()
         .then(() => {
             res.redirect('/blog')
-                // res.json({response: 'comment deleted'})
+
         })
         .catch((err) => {
             next(err)
         })
-
-})
-
+    })
 
 
 module.exports = router;

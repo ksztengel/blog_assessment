@@ -56,7 +56,7 @@
                         <p>{{comment}}</p>
 
                         <a style="color:black" id = "delete" href="/comments/delete/{{id}}">delete</a>
-                        <a style="color:black" id = "comments" href="/comments/edit/{{id}}">edit</a>
+                        <a style="color:black" id = "editcomments" href="/comments/editcomments/{{id}}">edit</a>
                         <!-- make a route, return an object with that comment, populate a new hbs edit-comment page -->
                     {{/each}}
                 </div>
@@ -100,5 +100,3 @@
             </form>
         </div>
     </div>
-
-    
