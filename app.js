@@ -10,12 +10,44 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const app = express();
+const knex = require('./db/knex');
+const passport = require('passport');
+const FacebookStrategy = require('passport-facebook').Strategy;
+const configAuth = require('./public/config/auth');
 
 app.use(cookieSession({
     name: 'blogpositive',
     secret: process.env.SESSION_SECRET,
     secureProxy: app.get('env') === 'production'
 }));
+app.use(passport.initialize());
+
+passport.use(new FacebookStrategy({
+        clientID: configAuth.clientID,
+        clientSecret: configAuth.clientSecret,
+        callbackURL: configAuth.callbackURL,
+        profileFields: ['email', 'name', 'displayName', 'profileUrl'],
+        enableProof: true,
+        passReqToCallback: true
+    },
+
+    function(req, accessToken, refreshToken, profile, cb1) {
+        db.createOrLogin(profile, (err, user) => {
+            req.session.userInfo = user;
+            return cb1(null, user);
+        });
+    }
+))
+
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+        done(err, user);
+    });
+});
 
 switch (app.get('env')) {
   case 'development':
