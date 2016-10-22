@@ -7,13 +7,12 @@
     "knex": "knex",
     "heroku-postbuild": "knex migrate:latest",
     "nodemon": "nodemon app.js"
-  },
-  },
-
+  },  
   "engines": {
     "node": "6.3.1"
   },
   "dependencies": {
+    "bcrypt": "^0.8.7",
     "body-parser": "~1.15.1",
     "cookie-parser": "~1.4.3",
     "cookie-session": "^2.0.0-alpha.1",
