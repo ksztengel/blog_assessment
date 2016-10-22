@@ -127,7 +127,7 @@ router.post('/editcomments/:id', (req, res, next) => {
             .then((comment) => {
                 console.log(comment);
                 res.redirect('/blog/')
-  
+
             })
     })
 

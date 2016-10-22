@@ -8,7 +8,7 @@ exports.up = function(knex, Promise) {
         .onDelete('CASCADE')
         .index();
     table.string('title').notNullable().defaultTo('');
-    table.string('post').notNullable().defaultTo('');
+    table.string('post',4000).notNullable();
 
     table.timestamps(true, true);
 })
