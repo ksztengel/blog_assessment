@@ -6,7 +6,7 @@ module.exports = {
     findOrCreate: (profile, callback) => {
         console.log('You made it to the findOrCreate function');
         knex('users')
-            .where('id', profile.emails[0].value)
+            .where('email', profile.emails[0].value)
             .first()
             .then((user) => {
                 if (user) {
