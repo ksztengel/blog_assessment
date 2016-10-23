@@ -10,6 +10,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const knex = require('./db/knex');
+const db = require('./db/api');
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const configAuth = require('./public/config/auth');
@@ -23,6 +24,7 @@ app.use(cookieSession({
     secureProxy: app.get('env') === 'production'
 }));
 
+
 passport.use(new FacebookStrategy({
         clientID: configAuth.clientID,
         clientSecret: configAuth.clientSecret,
@@ -33,7 +35,7 @@ passport.use(new FacebookStrategy({
     },
 
     function(req, accessToken, refreshToken, profile, cb1) {
-        db.createOrLogin(profile, (err, user) => {
+        db.findOrCreate(profile, (err, user) => {
             req.session.userInfo = user;
             return cb1(null, user);
         });

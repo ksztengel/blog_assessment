@@ -16,12 +16,12 @@
             </ul>
     </div>
 </nav>
-<div class = "container">
-<div class = "col s6 right-align">
+<div class="container">
+    <div class="col s6 right-align">
 
-<h1>blogPositive</h1>
-<p>It's human nature to be negative.  Defy it. Store your positive resources here.</p>
-</div>
+        <h1>blogPositive</h1>
+        <p>It's human nature to be negative. Defy it. Store your positive resources here.</p>
+    </div>
 </div>
 <div class="row"></div>
 <div class="row"></div>
@@ -45,13 +45,16 @@
                     <h6>{{post.post}}</h6>
                 </div>
                 <div class="card-action">
+
                     <a class="modal-trigger" href="#modal1">EDIT</a>
 
-                    <a href="/comments/deletepost/{{post.id}}" >DELETE</a>
+                    <a href="/comments/deletepost/{{post.id}}">DELETE</a>
                 </div>
+
             </div>
         </div>
     </div>
+</div>
 </div>
 </div>
 <div class="row">
@@ -61,10 +64,15 @@
                 <div class="container">
                     {{#each post.comments}}
                         <p>{{comment}}</p>
-
-                        <a style="color:black" id = "delete" href="/comments/delete/{{id}}">delete</a>
-                        <a style="color:black" id = "editcomments" href="/comments/editcomments/{{id}}">edit</a>
-                        <!-- make a route, return an object with that comment, populate a new hbs edit-comment page -->
+                        <div class="row"></div>
+                        <div class="row">
+                            <div class="col s2">
+                                <a style="color:orange" id="editcomments" href="/comments/editcomments/{{id}}">EDIT</a>
+                            </div>
+                            <div class="col s2">
+                                <a style="color:orange" id="delete" href="/comments/delete/{{id}}">DELETE</a>
+                            </div>
+                        </div>
                     {{/each}}
                 </div>
                 <div class="row">
