@@ -10,11 +10,8 @@ const authorize = (req, res, next) => {
         }
         next();
     }
-/* GET home page. */
-
-
+    /* GET home page. */
 router.get('/', authorize, (req, res, next) => {
-    console.log('req.session is ', req.session.userInfo);
     knex('posts')
         .then((index) => {
             console.log('index', index);

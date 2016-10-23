@@ -12,24 +12,18 @@ const authorize = (req, res, next) => {
 }
 
 router.get('/:id', authorize, (req, res, next) => {
-    console.log('req.session', req.session);
     knex('posts')
         .where('id', req.params.id)
         .first()
         .then(returnPost => {
-            console.log('returnpost', returnPost);
             var post = returnPost
             post.comments = []
             knex('comments')
                 .where('posts_id', post.id)
                 .then(returnComments => {
-                    console.log('returnComments', returnComments);
                     returnComments.forEach((comment) => {
                         post.comments.push(comment)
                     })
-
-                    console.log("post to be rendered", post);
-
                     res.render('comments', {
                         post: post
                     });
@@ -46,8 +40,6 @@ router.get('/:id', authorize, (req, res, next) => {
             posts_id: req.params.id,
             comment: req.body.comment
         }
-
-        console.log("newComment", newComment);
 
         knex('comments')
             .insert(newComment, 'id')
@@ -118,20 +110,18 @@ router.get('/editcomments/:id', (req, res) => {
 })
 
 router.post('/editcomments/:id', (req, res, next) => {
-        let updateComment = {
-            comment: req.body.comment
-        }
-        knex(`comments`)
-            .where(`id`, req.params.id)
-            .update(updateComment, '*')
-            .then((comment) => {
-                console.log(comment);
-                res.redirect('/blog/')
+    let updateComment = {
+        comment: req.body.comment
+    }
+    knex(`comments`)
+        .where(`id`, req.params.id)
+        .update(updateComment, '*')
+        .then((comment) => {
+            console.log(comment);
+            res.redirect('/blog/')
 
-            })
-    })
-
-
+        })
+})
 
 router.get('/delete/:id', (req, res, next) => {
 
@@ -146,7 +136,7 @@ router.get('/delete/:id', (req, res, next) => {
         .catch((err) => {
             next(err)
         })
-    })
+})
 
 
 module.exports = router;
